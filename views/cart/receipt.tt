@@ -1,0 +1,45 @@
+
+  <p>Checkout has been successful!!</p>
+  <h1>Receipt #: [% cart.id %] </h1>
+  [% IF cart.log.ec_cart.cart.items.size %]<h2>Cart info</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>SKU</th><th>Quantity</th><th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+    [% FOREACH item IN cart.log.ec_cart.cart.items %]
+        <tr>
+          <td>  [% item.ec_sku %] </td>
+          <td>[% item.ec_quantity  %] </td><td>[% item.ec_price %] </td>
+        </tr>
+    [% END %]
+        <tr>
+          <td colspan=2 align='right'>Subtotal</td><td>[% cart.log.ec_cart.cart.subtotal %]</td>
+        </tr>
+      [% FOREACH adjustment IN cart.log.ec_cart.cart.adjustments %]
+        <tr><td colspan=2 align='right'>[% adjustment.description %]</td><td>[% adjustment.value %]</td></tr> 
+      [% END %] 
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan=2>Total</td><td> [% cart.log.ec_cart.cart.total %] </td>
+        </tr>
+      </tfoot>
+    </table>
+    [% FOREACH error = cart.log.ec_cart.add.error %]
+      <p> [% error %] </p>
+    [% END %]
+    [% IF 0 %]
+     <p><a href='cart/clear'> Clear your cart. </a></p>
+    [% END %]
+  [% ELSE %]
+    <p>Your cart is empty</p>
+  [% END %]
+  <h2>Log Info</h2>
+  <table>
+    <tr><td>Cart status:</td><td>[%  cart.status %]</td></tr>
+    <tr><td>Email</td><td> [% cart.log.data.ec_cart.shipping.form.email %] </td>
+  </table>
+  <p><a href='../products'> Product index </a></p>

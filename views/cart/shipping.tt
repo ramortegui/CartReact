@@ -1,0 +1,43 @@
+<h1>Shipping</h1>[% IF ec_cart.cart.items.size %]<h2>Cart info</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>SKU</th><th>Quantity</th><th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+    [% FOREACH item IN ec_cart.cart.items %]
+        <tr>
+          <td>  [% item.ec_sku %] </td>
+          <td>[% item.ec_quantity  %] </td><td>[% item.ec_price %] </td>
+        </tr>
+    [% END %]
+        <tr>
+          <td colspan=2 align='right'>Subtotal</td><td>[% ec_cart.cart.subtotal %]</td>
+        </tr>
+      [% FOREACH adjustment IN ec_cart.cart.adjustments %]
+        <tr><td colspan=2 align='right'>[% adjustment.description %]</td><td>[% adjustment.value %]</td></tr> 
+      [% END %] 
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan=2>Total</td><td> [% ec_cart.cart.total %] </td>
+        </tr>
+      </tfoot>
+    </table>
+    [% FOREACH error = ec_cart.add.error %]
+      <p> [% error %] </p>
+    [% END %]
+    [% IF 0 %]
+     <p><a href='cart/clear'> Clear your cart. </a></p>
+    [% END %]
+  [% ELSE %]
+    <p>Your cart is empty</p>
+  [% END %]
+  [% FOREACH error = ec_cart.shipping.error %]
+    <p> [% error %] </p>
+  [% END %]
+  <h2>Shipping info</h2>
+  <form method='post' action='shipping'>
+   <p>Email <input type='text' name='email' value='[% ec_cart.shipping.form.email %]' paceholder='email@domain.com'><input type='submit' value = 'Continue'></p>
+  </form><p><a href='../cart'> Cart </a></p>
